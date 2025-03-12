@@ -1,12 +1,274 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>موقعي الأول</title>
+    <title>LAZ CATE - تسجيل الدخول</title>
+    <style>
+        /* الألوان اللي طلبتها */
+        :root {
+            --primary: #000;
+            --secondary: #fff;
+            --accent: #007bff;
+            --gray: #f0f0f0;
+            --red: #ff0000;
+        }
+
+        /* ستايل عام */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: var(--primary);
+            color: var(--secondary);
+        }
+
+        /* الواجهة اللي فوق (بدون قائمة) */
+        .header {
+            padding: 1rem;
+            background-color: var(--primary);
+            text-align: center;
+        }
+
+        /* كتابة LAZ CATE باللون الأحمر */
+        .logo {
+            color: var(--red);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* واجهة تسجيل الدخول */
+        .login-container {
+            max-width: 400px;
+            margin: 5rem auto;
+            padding: 2rem;
+            background-color: var(--secondary);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .input-group {
+            margin-bottom: 1rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--gray);
+            border-radius: 5px;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-login:hover {
+            background-color: #0056b3;
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .register-link a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* إشعارات الخطأ */
+        .alert {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .alert-danger {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+
+        .alert-success {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        /* شروط التسجيل الجديدة */
+        .terms-checkbox {
+            margin: 1rem 0;
+        }
+
+        .terms-checkbox input {
+            margin-left: 0.5rem;
+        }
+    </style>
 </head>
 <body>
-    <h1>مرحبًا بك في موقعي!</h1>
-    <p>هذا أول موقع أرفعه على GitHub Pages.</p>
+    <!-- الواجهة اللي فوق بدون قائمة -->
+    <div class="header">
+        <div class="logo">LAZ CATE</div>
+    </div>
+
+    <!-- واجهة تسجيل الدخول -->
+    <div class="login-container" id="loginContainer">
+        <h2>تسجيل الدخول</h2>
+        <div class="alert alert-danger" id="loginErrorEmail">البريد الإلكتروني غير صحيح</div>
+        <div class="alert alert-danger" id="loginErrorPassword">كلمة السر غير صحيحة</div>
+        <div class="alert alert-danger" id="loginErrorGeneral">بياناتك مشكوك فيها</div>
+        <div class="input-group">
+            <label for="loginEmail">البريد الإلكتروني</label>
+            <input type="email" id="loginEmail" required>
+        </div>
+        <div class="input-group">
+            <label for="loginPassword">كلمة المرور</label>
+            <input type="password" id="loginPassword" required>
+        </div>
+        <button class="btn-login" onclick="handleLogin()">تسجيل الدخول</button>
+        <div class="register-link">
+            ليس لديك حساب؟ <a href="#" onclick="showRegister()">إنشاء حساب</a>
+        </div>
+    </div>
+
+    <!-- واجهة إنشاء الحساب مع الشروط الجديدة -->
+    <div class="login-container" id="registerContainer" style="display: none;">
+        <h2>إنشاء حساب</h2>
+        <div class="alert alert-success" id="registerSuccess">تم التسجيل بنجاح</div>
+        <div class="alert alert-danger" id="registerErrorEmail">يجب أن يحتوي البريد الإلكتروني على @</div>
+        <div class="alert alert-danger" id="registerErrorUsername">اسم المستخدم يجب أن يكون 7 أحرف/أرقام على الأقل</div>
+        <div class="alert alert-danger" id="registerErrorPassword">كلمة المرور يجب أن تحتوي على 7 أحرف/أرقام على الأقل</div>
+        <div class="alert alert-danger" id="registerErrorTerms">يجب الموافقة على الشروط والأحكام</div>
+        <div class="input-group">
+            <label for="registerEmail">البريد الإلكتروني</label>
+            <input type="email" id="registerEmail" required>
+        </div>
+        <div class="input-group">
+            <label for="registerUsername">اسم المستخدم</label>
+            <input type="text" id="registerUsername" required>
+        </div>
+        <div class="input-group">
+            <label for="registerPassword">كلمة المرور</label>
+            <input type="password" id="registerPassword" required>
+        </div>
+        <div class="input-group">
+            <label for="confirmPassword">تأكيد كلمة المرور</label>
+            <input type="password" id="confirmPassword" required>
+        </div>
+        <div class="terms-checkbox">
+            <input type="checkbox" id="termsCheckbox">
+            <label for="termsCheckbox">أوافق على الشروط والأحكام</label>
+        </div>
+        <button class="btn-login" onclick="handleRegister()">التسجيل</button>
+        <div class="register-link">
+            لديك حساب؟ <a href="#" onclick="showLogin()">تسجيل الدخول</a>
+        </div>
+    </div>
+
+    <script>
+        // دالة عرض واجهة تسجيل الدخول
+        function showLogin() {
+            document.getElementById('loginContainer').style.display = 'block';
+            document.getElementById('registerContainer').style.display = 'none';
+        }
+
+        // دالة عرض واجهة التسجيل
+        function showRegister() {
+            document.getElementById('loginContainer').style.display = 'none';
+            document.getElementById('registerContainer').style.display = 'block';
+        }
+
+        // دالة التسجيل مع الشروط الجديدة
+        function handleRegister() {
+            const email = document.getElementById('registerEmail').value;
+            const username = document.getElementById('registerUsername').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const termsCheckbox = document.getElementById('termsCheckbox').checked;
+
+            // إخفاء كل الإشعارات
+            document.querySelectorAll('.alert').forEach(alert => alert.style.display = 'none');
+
+            // التحقق من الشروط
+            if (!email.includes('@')) {
+                document.getElementById('registerErrorEmail').style.display = 'block';
+                return;
+            }
+
+            if (username.length < 7 || !/^[a-zA-Z0-9]+$/.test(username)) {
+                document.getElementById('registerErrorUsername').style.display = 'block';
+                return;
+            }
+
+            if (password.length < 7 || !/^[a-zA-Z0-9]+$/.test(password)) {
+                document.getElementById('registerErrorPassword').style.display = 'block';
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                alert('كلمتا المرور غير متطابقتين');
+                return;
+            }
+
+            if (!termsCheckbox) {
+                document.getElementById('registerErrorTerms').style.display = 'block';
+                return;
+            }
+
+            // تخزين البيانات في localStorage
+            const userData = {
+                email: email,
+                username: username,
+                password: password
+            };
+
+            localStorage.setItem('userData', JSON.stringify(userData));
+            document.getElementById('registerSuccess').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('registerSuccess').style.display = 'none';
+                showLogin();
+            }, 2000);
+        }
+
+        // دالة تسجيل الدخول مع التحقق الدقيق
+        function handleLogin() {
+            const storedData = localStorage.getItem('userData');
+            const enteredEmail = document.getElementById('loginEmail').value;
+            const enteredPassword = document.getElementById('loginPassword').value;
+
+            // إخفاء كل الإشعارات
+            document.querySelectorAll('.alert').forEach(alert => alert.style.display = 'none');
+
+            if (!storedData) {
+                document.getElementById('loginErrorGeneral').style.display = 'block';
+                return;
+            }
+
+            const savedUser = JSON.parse(storedData);
+
+            if (enteredEmail !== savedUser.email) {
+                document.getElementById('loginErrorGeneral').style.display = 'block';
+            } else if (enteredPassword !== savedUser.password) {
+                document.getElementById('loginErrorPassword').style.display = 'block';
+            } else {
+                alert('مرحبا بك ' + savedUser.username);
+                // هنا يمكن توجيه المستخدم للصفحة الرئيسية
+            }
+        }
+    </script>
 </body>
-</html>
+    </html>
