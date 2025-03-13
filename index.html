@@ -1,274 +1,539 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LAZ CATE - تسجيل الدخول</title>
-    <style>
-        /* الألوان اللي طلبتها */
-        :root {
-            --primary: #000;
-            --secondary: #fff;
-            --accent: #007bff;
-            --gray: #f0f0f0;
-            --red: #ff0000;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LAZ CATE - نظام التسجيل والدخول</title>
+  <style>
+    :root {
+      --primary: #000;
+      --secondary: #fff;
+      --accent: #007bff;
+      --gray: #f0f0f0;
+      --red: #ff0000;
+    }
 
-        /* ستايل عام */
-        body {
-            margin: 0;
-            font-family: 'Arial', sans-serif;
-            background-color: var(--primary);
-            color: var(--secondary);
-        }
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background-color: var(--primary);
+      color: var(--secondary);
+      position: relative;
+      overflow-x: hidden;
+    }
 
-        /* الواجهة اللي فوق (بدون قائمة) */
-        .header {
-            padding: 1rem;
-            background-color: var(--primary);
-            text-align: center;
-        }
+    .header {
+      position: relative;
+      padding: 1rem;
+      background-color: var(--primary);
+      text-align: center;
+    }
+    .logo {
+      color: var(--red);
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    .hamburger {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: var(--secondary);
+    }
 
-        /* كتابة LAZ CATE باللون الأحمر */
-        .logo {
-            color: var(--red);
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
+    /* القائمة الجانبية */
+    .side-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 220px;
+      height: 100%;
+      background-color: var(--primary);
+      color: var(--secondary);
+      padding: 2rem 1rem;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.3);
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      z-index: 1000;
+    }
+    .side-menu.active {
+      transform: translateX(0);
+    }
+    .side-menu ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .side-menu ul li {
+      margin-bottom: 1.5rem;
+      cursor: pointer;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+    }
+    .side-menu ul li svg {
+      margin-left: 0.5rem;
+    }
+    .side-menu ul li:hover {
+      text-decoration: underline;
+    }
 
-        /* واجهة تسجيل الدخول */
-        .login-container {
-            max-width: 400px;
-            margin: 5rem auto;
-            padding: 2rem;
-            background-color: var(--secondary);
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+    /* الخط الأزرق المتحرك */
+    .transition-line {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 5px;
+      background-color: var(--accent);
+      width: 0;
+      z-index: 900;
+      animation: moveLine 0.5s linear forwards;
+    }
+    @keyframes moveLine {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    .hidden {
+      display: none;
+    }
 
-        .input-group {
-            margin-bottom: 1rem;
-        }
+    /* تأثير الضباب */
+    .blur {
+      filter: blur(5px);
+      transition: filter 0.5s ease;
+    }
 
-        .input-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--primary);
-        }
+    /* الحاويات (الشاشات) */
+    .container {
+      max-width: 400px;
+      margin: 5rem auto;
+      padding: 2rem;
+      background-color: var(--secondary);
+      color: var(--primary);
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 50;
+      text-align: center;
+    }
+    .container h2 {
+      margin-top: 0;
+    }
+    .input-group {
+      margin-bottom: 1rem;
+      text-align: right;
+      position: relative;
+    }
+    .input-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    .input-group input {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid var(--gray);
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
 
-        .input-group input {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid var(--gray);
-            border-radius: 5px;
-        }
+    /* زر إظهار/إخفاء كلمة المرور */
+    .eye-icon {
+      position: absolute;
+      top: 37px;
+      left: 10px;
+      cursor: pointer;
+      user-select: none;
+      color: #555;
+      font-size: 0.9rem;
+    }
 
-        .btn-login {
-            width: 100%;
-            padding: 0.8rem;
-            background-color: var(--accent);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+    .btn {
+      width: 100%;
+      padding: 0.8rem;
+      background-color: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background-color: #0056b3;
+    }
+    .link {
+      margin-top: 1rem;
+    }
+    .link a {
+      color: var(--accent);
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .link a:hover {
+      text-decoration: underline;
+    }
 
-        .btn-login:hover {
-            background-color: #0056b3;
-        }
-
-        .register-link {
-            text-align: center;
-            margin-top: 1rem;
-        }
-
-        .register-link a {
-            color: var(--accent);
-            text-decoration: none;
-        }
-
-        .register-link a:hover {
-            text-decoration: underline;
-        }
-
-        /* إشعارات الخطأ */
-        .alert {
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border-radius: 5px;
-            display: none;
-        }
-
-        .alert-danger {
-            background-color: #ffebee;
-            color: #c62828;
-        }
-
-        .alert-success {
-            background-color: #e8f5e9;
-            color: #2e7d32;
-        }
-
-        /* شروط التسجيل الجديدة */
-        .terms-checkbox {
-            margin: 1rem 0;
-        }
-
-        .terms-checkbox input {
-            margin-left: 0.5rem;
-        }
-    </style>
+    /* التنبيهات الحمراء تحت الحقول */
+    .error-message {
+      color: var(--red);
+      font-size: 0.85rem;
+      margin-top: 0.3rem;
+      display: none; /* مخفية افتراضياً */
+    }
+    .error-message.active {
+      display: block;
+    }
+  </style>
 </head>
 <body>
-    <!-- الواجهة اللي فوق بدون قائمة -->
-    <div class="header">
-        <div class="logo">LAZ CATE</div>
+  <!-- الرأس مع الهامبرغر والشعار -->
+  <div class="header">
+    <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
+    <div class="logo">LAZ CATE</div>
+  </div>
+
+  <!-- القائمة الجانبية -->
+  <div id="sideMenu" class="side-menu"></div>
+
+  <!-- الخط الأزرق المتحرك -->
+  <div id="transitionLine" class="transition-line hidden"></div>
+
+  <!-- واجهة تسجيل الدخول -->
+  <div id="loginContainer" class="container">
+    <h2>تسجيل الدخول</h2>
+    <div class="input-group">
+      <label for="loginEmail">البريد الإلكتروني</label>
+      <input type="email" id="loginEmail" />
+      <div id="loginEmailError" class="error-message">البريد الإلكتروني خاطئ</div>
     </div>
-
-    <!-- واجهة تسجيل الدخول -->
-    <div class="login-container" id="loginContainer">
-        <h2>تسجيل الدخول</h2>
-        <div class="alert alert-danger" id="loginErrorEmail">البريد الإلكتروني غير صحيح</div>
-        <div class="alert alert-danger" id="loginErrorPassword">كلمة السر غير صحيحة</div>
-        <div class="alert alert-danger" id="loginErrorGeneral">بياناتك مشكوك فيها</div>
-        <div class="input-group">
-            <label for="loginEmail">البريد الإلكتروني</label>
-            <input type="email" id="loginEmail" required>
-        </div>
-        <div class="input-group">
-            <label for="loginPassword">كلمة المرور</label>
-            <input type="password" id="loginPassword" required>
-        </div>
-        <button class="btn-login" onclick="handleLogin()">تسجيل الدخول</button>
-        <div class="register-link">
-            ليس لديك حساب؟ <a href="#" onclick="showRegister()">إنشاء حساب</a>
-        </div>
+    <div class="input-group">
+      <label for="loginPassword">كلمة المرور</label>
+      <input type="password" id="loginPassword" />
+      <div id="loginPasswordError" class="error-message">كلمة المرور خاطئة</div>
     </div>
-
-    <!-- واجهة إنشاء الحساب مع الشروط الجديدة -->
-    <div class="login-container" id="registerContainer" style="display: none;">
-        <h2>إنشاء حساب</h2>
-        <div class="alert alert-success" id="registerSuccess">تم التسجيل بنجاح</div>
-        <div class="alert alert-danger" id="registerErrorEmail">يجب أن يحتوي البريد الإلكتروني على @</div>
-        <div class="alert alert-danger" id="registerErrorUsername">اسم المستخدم يجب أن يكون 7 أحرف/أرقام على الأقل</div>
-        <div class="alert alert-danger" id="registerErrorPassword">كلمة المرور يجب أن تحتوي على 7 أحرف/أرقام على الأقل</div>
-        <div class="alert alert-danger" id="registerErrorTerms">يجب الموافقة على الشروط والأحكام</div>
-        <div class="input-group">
-            <label for="registerEmail">البريد الإلكتروني</label>
-            <input type="email" id="registerEmail" required>
-        </div>
-        <div class="input-group">
-            <label for="registerUsername">اسم المستخدم</label>
-            <input type="text" id="registerUsername" required>
-        </div>
-        <div class="input-group">
-            <label for="registerPassword">كلمة المرور</label>
-            <input type="password" id="registerPassword" required>
-        </div>
-        <div class="input-group">
-            <label for="confirmPassword">تأكيد كلمة المرور</label>
-            <input type="password" id="confirmPassword" required>
-        </div>
-        <div class="terms-checkbox">
-            <input type="checkbox" id="termsCheckbox">
-            <label for="termsCheckbox">أوافق على الشروط والأحكام</label>
-        </div>
-        <button class="btn-login" onclick="handleRegister()">التسجيل</button>
-        <div class="register-link">
-            لديك حساب؟ <a href="#" onclick="showLogin()">تسجيل الدخول</a>
-        </div>
+    <button class="btn" onclick="handleLogin()">تسجيل الدخول</button>
+    <div class="link">
+      ليس لديك حساب؟ <a onclick="handleSideMenu('register')">إنشاء حساب</a>
     </div>
+  </div>
 
-    <script>
-        // دالة عرض واجهة تسجيل الدخول
-        function showLogin() {
-            document.getElementById('loginContainer').style.display = 'block';
-            document.getElementById('registerContainer').style.display = 'none';
+  <!-- واجهة إنشاء الحساب -->
+  <div id="registerContainer" class="container hidden">
+    <h2>إنشاء حساب</h2>
+    <div class="input-group">
+      <label for="registerEmail">البريد الإلكتروني</label>
+      <input type="email" id="registerEmail" />
+      <div id="registerEmailError" class="error-message">يجب أن يحتوي البريد على @</div>
+    </div>
+    <div class="input-group">
+      <label for="registerUsername">اسم المستخدم</label>
+      <input type="text" id="registerUsername" />
+      <div id="registerUsernameError" class="error-message">يجب استخدام أكثر من 7 أحرف/أرقام</div>
+    </div>
+    <div class="input-group">
+      <label for="registerPassword">كلمة المرور</label>
+      <input type="password" id="registerPassword" />
+      <span class="eye-icon" id="eyeIconRegister">👁</span>
+      <div id="registerPasswordError" class="error-message">يجب أن تكون أكثر من 6 أحرف/أرقام</div>
+    </div>
+    <button class="btn" onclick="handleRegister()">التسجيل</button>
+    <div class="link">
+      لديك حساب؟ <a onclick="handleSideMenu('login')">تسجيل الدخول</a>
+    </div>
+  </div>
+
+  <!-- واجهة الصفحة الرئيسية (Home) -->
+  <div id="homeContainer" class="container hidden">
+    <h2>Home</h2>
+    <p>مرحباً بكم في الصفحة الرئيسية!</p>
+  </div>
+
+  <!-- واجهة PANL -->
+  <div id="panlContainer" class="container hidden">
+    <h2>PANL</h2>
+    <p>هذه واجهة PANL</p>
+  </div>
+
+  <!-- واجهة TLGRAM -->
+  <div id="tlgramContainer" class="container hidden">
+    <h2>TLGRAM</h2>
+    <p>هذه واجهة TLGRAM</p>
+  </div>
+
+  <script>
+    /****************** القائمة الجانبية ******************/
+    function updateSideMenu() {
+      const sideMenu = document.getElementById('sideMenu');
+      if (sessionStorage.getItem("isLoggedIn") === "true") {
+        // إذا كان المستخدم مسجّل الدخول
+        sideMenu.innerHTML = `
+          <ul>
+            <li onclick="handleSideMenu('home'); toggleMenu();">
+              Home
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5H2v6a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5V10h2v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-6h.5a.5.5 0 0 0 .354-.854l-6-6z"/>
+              </svg>
+            </li>
+            <li onclick="handleSideMenu('panl'); toggleMenu();">
+              PANL
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M2 2h4v4H2V2zM10 2h4v4h-4V2zM2 10h4v4H2v-4zM10 10h4v4h-4v-4z"/>
+              </svg>
+            </li>
+            <li onclick="handleSideMenu('tlgram'); toggleMenu();">
+              TLGRAM
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M16 8a8 8 0 1 1-16 0 8 8 0 0 1 16 0zM6.272 10.4l-.96 4.032c.136 0 .192-.056.256-.12l1.376-1.312 2.688 1.968c.496.264.864.12 1.008-.432l1.824-8.368-7.2 3.6z"/>
+              </svg>
+            </li>
+            <li onclick="handleLogout(); toggleMenu();">
+              تسجيل الخروج
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M6 3a1 1 0 0 1 1 1v2h4V4a1 1 0 0 1 1-1h1v10h-1a1 1 0 0 1-1-1v-2H7v2a1 1 0 0 1-1 1H5V3h1z"/>
+                <path fill-rule="evenodd" d="M4.146 8.354a.5.5 0 0 1 0-.708L7.293 4.5a.5.5 0 1 1 .707.707L5.207 8l3.793 3.793a.5.5 0 0 1-.707.707L4.146 8.354z"/>
+              </svg>
+            </li>
+          </ul>
+        `;
+      } else {
+        // إذا كان المستخدم غير مسجّل الدخول
+        sideMenu.innerHTML = `
+          <ul>
+            <li onclick="handleSideMenu('login'); toggleMenu();">
+              تسجيل الدخول
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M3 11a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h3V3H3a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h3v-2H3z"/>
+                <path d="M9 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 .866 1.5l-1.75 2.5a1 1 0 0 1-.866.5H10a1 1 0 0 1-1-1V4z"/>
+              </svg>
+            </li>
+            <li onclick="handleSideMenu('register'); toggleMenu();">
+              إنشاء حساب
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M15.502 1.94a.5.5 0 0 1 0 .706l-1.793 1.793-2.121-2.12 1.793-1.793a.5.5 0 0 1 .707 0l1.414 1.414z"/>
+                <path fill-rule="evenodd" d="M1 13.5V16h2.5l7.373-7.373-2.5-2.5L1 13.5zm10.854-6.354l2.5 2.5L11.5 15H9v-2.5l2.354-2.354z"/>
+              </svg>
+            </li>
+          </ul>
+        `;
+      }
+    }
+
+    function toggleMenu() {
+      const sideMenu = document.getElementById('sideMenu');
+      sideMenu.classList.toggle('active');
+    }
+
+    /****************** تأثير الخط الأزرق والضباب ******************/
+    function showContainer(newId) {
+      const containers = ['loginContainer','registerContainer','homeContainer','panlContainer','tlgramContainer'];
+      let currentId = containers.find(id => !document.getElementById(id).classList.contains('hidden'));
+      const newContainer = document.getElementById(newId);
+      const transitionLine = document.getElementById('transitionLine');
+
+      transitionLine.classList.remove('hidden');
+      transitionLine.style.animation = 'none';
+      void transitionLine.offsetWidth;
+      transitionLine.style.animation = 'moveLine 0.5s linear forwards';
+
+      if (currentId) {
+        document.getElementById(currentId).classList.add('blur');
+      }
+
+      setTimeout(() => {
+        if (currentId) {
+          document.getElementById(currentId).classList.add('hidden');
+          document.getElementById(currentId).classList.remove('blur');
         }
+        newContainer.classList.remove('hidden');
+        newContainer.classList.remove('blur');
+        transitionLine.classList.add('hidden');
+      }, 500);
+    }
 
-        // دالة عرض واجهة التسجيل
-        function showRegister() {
-            document.getElementById('loginContainer').style.display = 'none';
-            document.getElementById('registerContainer').style.display = 'block';
+    function handleSideMenu(target) {
+      let containerId;
+      if (target === 'login') {
+        containerId = 'loginContainer';
+      } else if (target === 'register') {
+        containerId = 'registerContainer';
+      } else if (target === 'home') {
+        containerId = 'homeContainer';
+      } else if (target === 'panl') {
+        containerId = 'panlContainer';
+      } else if (target === 'tlgram') {
+        containerId = 'tlgramContainer';
+      }
+      // منع الوصول للواجهات المحمية دون تسجيل دخول
+      if ((containerId === 'homeContainer' || containerId === 'panlContainer' || containerId === 'tlgramContainer') &&
+          sessionStorage.getItem("isLoggedIn") !== "true") {
+        alert("يجب تسجيل الدخول للوصول إلى هذه الصفحة");
+        containerId = 'loginContainer';
+      }
+      showContainer(containerId);
+    }
+
+    /****************** تسجيل الخروج ******************/
+    function handleLogout() {
+      sessionStorage.removeItem('isLoggedIn');
+      updateSideMenu();
+      showContainer('registerContainer');
+    }
+
+    // حذف حالة تسجيل الدخول عند مغادرة الصفحة
+    window.addEventListener("beforeunload", function() {
+      sessionStorage.removeItem('isLoggedIn');
+    });
+
+    /****************** تسجيل الحساب ******************/
+    // التحقق الفوري من الحقول
+    const registerEmail = document.getElementById('registerEmail');
+    const registerUsername = document.getElementById('registerUsername');
+    const registerPassword = document.getElementById('registerPassword');
+
+    const registerEmailError = document.getElementById('registerEmailError');
+    const registerUsernameError = document.getElementById('registerUsernameError');
+    const registerPasswordError = document.getElementById('registerPasswordError');
+
+    // فحص البريد إذا كان يحوي @
+    registerEmail.addEventListener('input', () => {
+      if (!registerEmail.value.includes('@')) {
+        registerEmailError.classList.add('active');
+      } else {
+        registerEmailError.classList.remove('active');
+      }
+    });
+
+    // فحص اسم المستخدم إذا كان أكثر من 7
+    registerUsername.addEventListener('input', () => {
+      if (registerUsername.value.length <= 7) {
+        registerUsernameError.classList.add('active');
+      } else {
+        registerUsernameError.classList.remove('active');
+      }
+    });
+
+    // فحص كلمة المرور إذا كانت أكثر من 6
+    registerPassword.addEventListener('input', () => {
+      if (registerPassword.value.length <= 6) {
+        registerPasswordError.classList.add('active');
+      } else {
+        registerPasswordError.classList.remove('active');
+      }
+    });
+
+    // زر إظهار/إخفاء كلمة المرور في التسجيل
+    const eyeIconRegister = document.getElementById('eyeIconRegister');
+    eyeIconRegister.addEventListener('click', () => {
+      if (registerPassword.type === 'password') {
+        registerPassword.type = 'text';
+        eyeIconRegister.textContent = '👁‍🗨';
+      } else {
+        registerPassword.type = 'password';
+        eyeIconRegister.textContent = '👁';
+      }
+    });
+
+    function handleRegister() {
+      // نقرأ الحقول مرة أخرى
+      const email = registerEmail.value.trim();
+      const username = registerUsername.value.trim();
+      const password = registerPassword.value;
+
+      // التحقق النهائي قبل الحفظ
+      let hasError = false;
+
+      if (!email.includes('@')) {
+        registerEmailError.classList.add('active');
+        hasError = true;
+      }
+      if (username.length <= 7) {
+        registerUsernameError.classList.add('active');
+        hasError = true;
+      }
+      if (password.length <= 6) {
+        registerPasswordError.classList.add('active');
+        hasError = true;
+      }
+      if (hasError) return; // لا نكمل الحفظ إذا كان هناك خطأ
+
+      // جلب قائمة المستخدمين من localStorage
+      let users = JSON.parse(localStorage.getItem('userData')) || [];
+
+      // التحقق من عدم تكرار البريد أو اليوزرنيم أو الباسورد
+      const emailExists = users.some(u => u.email === email);
+      if (emailExists) {
+        alert('هذا البريد الإلكتروني مستخدم بالفعل');
+        return;
+      }
+      const usernameExists = users.some(u => u.username === username);
+      if (usernameExists) {
+        alert('اسم المستخدم مستخدم بالفعل');
+        return;
+      }
+      const passwordExists = users.some(u => u.password === password);
+      if (passwordExists) {
+        alert('كلمة المرور مستخدمة بالفعل');
+        return;
+      }
+
+      // إضافة المستخدم الجديد
+      users.push({ email, username, password });
+      localStorage.setItem('userData', JSON.stringify(users));
+
+      alert('تم التسجيل بنجاح');
+      showContainer('loginContainer');
+    }
+
+    /****************** تسجيل الدخول ******************/
+    const loginEmail = document.getElementById('loginEmail');
+    const loginPassword = document.getElementById('loginPassword');
+    const loginEmailError = document.getElementById('loginEmailError');
+    const loginPasswordError = document.getElementById('loginPasswordError');
+
+    function handleLogin() {
+      // إخفاء الأخطاء أولاً
+      loginEmailError.classList.remove('active');
+      loginPasswordError.classList.remove('active');
+
+      const email = loginEmail.value.trim();
+      const password = loginPassword.value;
+
+      let users = JSON.parse(localStorage.getItem('userData')) || [];
+      // نبحث عن المستخدم
+      const user = users.find(u => u.email === email);
+
+      if (!user) {
+        // البريد الإلكتروني غير موجود
+        if (password.length > 0) {
+          // إذا أدخل كلمة مرور ولكن الإيميل غير موجود
+          loginEmailError.classList.add('active');
+        } else {
+          // في كل الأحوال الإيميل خاطئ
+          loginEmailError.classList.add('active');
         }
-
-        // دالة التسجيل مع الشروط الجديدة
-        function handleRegister() {
-            const email = document.getElementById('registerEmail').value;
-            const username = document.getElementById('registerUsername').value;
-            const password = document.getElementById('registerPassword').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            const termsCheckbox = document.getElementById('termsCheckbox').checked;
-
-            // إخفاء كل الإشعارات
-            document.querySelectorAll('.alert').forEach(alert => alert.style.display = 'none');
-
-            // التحقق من الشروط
-            if (!email.includes('@')) {
-                document.getElementById('registerErrorEmail').style.display = 'block';
-                return;
-            }
-
-            if (username.length < 7 || !/^[a-zA-Z0-9]+$/.test(username)) {
-                document.getElementById('registerErrorUsername').style.display = 'block';
-                return;
-            }
-
-            if (password.length < 7 || !/^[a-zA-Z0-9]+$/.test(password)) {
-                document.getElementById('registerErrorPassword').style.display = 'block';
-                return;
-            }
-
-            if (password !== confirmPassword) {
-                alert('كلمتا المرور غير متطابقتين');
-                return;
-            }
-
-            if (!termsCheckbox) {
-                document.getElementById('registerErrorTerms').style.display = 'block';
-                return;
-            }
-
-            // تخزين البيانات في localStorage
-            const userData = {
-                email: email,
-                username: username,
-                password: password
-            };
-
-            localStorage.setItem('userData', JSON.stringify(userData));
-            document.getElementById('registerSuccess').style.display = 'block';
-            setTimeout(() => {
-                document.getElementById('registerSuccess').style.display = 'none';
-                showLogin();
-            }, 2000);
+      } else {
+        // وجدنا المستخدم ولكن نتحقق من كلمة المرور
+        if (user.password !== password) {
+          // كلمة المرور خاطئة
+          loginPasswordError.classList.add('active');
+        } else {
+          // تسجيل دخول ناجح
+          sessionStorage.setItem('isLoggedIn', 'true');
+          updateSideMenu();
+          showContainer('homeContainer');
         }
+      }
+    }
 
-        // دالة تسجيل الدخول مع التحقق الدقيق
-        function handleLogin() {
-            const storedData = localStorage.getItem('userData');
-            const enteredEmail = document.getElementById('loginEmail').value;
-            const enteredPassword = document.getElementById('loginPassword').value;
-
-            // إخفاء كل الإشعارات
-            document.querySelectorAll('.alert').forEach(alert => alert.style.display = 'none');
-
-            if (!storedData) {
-                document.getElementById('loginErrorGeneral').style.display = 'block';
-                return;
-            }
-
-            const savedUser = JSON.parse(storedData);
-
-            if (enteredEmail !== savedUser.email) {
-                document.getElementById('loginErrorGeneral').style.display = 'block';
-            } else if (enteredPassword !== savedUser.password) {
-                document.getElementById('loginErrorPassword').style.display = 'block';
-            } else {
-                alert('مرحبا بك ' + savedUser.username);
-                // هنا يمكن توجيه المستخدم للصفحة الرئيسية
-            }
-        }
-    </script>
+    /****************** عند تحميل الصفحة ******************/
+    document.addEventListener('DOMContentLoaded', function() {
+      updateSideMenu();
+      if (sessionStorage.getItem("isLoggedIn") === "true") {
+        showContainer('homeContainer');
+      } else {
+        showContainer('loginContainer');
+      }
+    });
+  </script>
 </body>
-    </html>
+</html>
