@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WIXSGIFT</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <div class="logo">WIXSGIFT</div>
+            </div>
+            <div class="icon-container">
+                <i class="fas fa-coins"></i>
+                <i class="fas fa-chart-line"></i>
+                <i class="fas fa-gem"></i>
+            </div>
+            <nav>
+                <ul>
+                    <li>
+                        <a href="index.html" class="active">
+                            <div class="nav-icon-container">
+                                <i class="fas fa-tv"></i>
+                            </div>
+                            <span>لوحة التحكم</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="login.html">
+                            <div class="nav-icon-container">
+                                <i class="fas fa-home"></i>
+                            </div>
+                            <span>مدخل</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="register.html">
+                            <div class="nav-icon-container">
+                                <i class="fas fa-sign-in-alt"></i>
+                            </div>
+                            <span>تسجيل</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="contact.html">
+                            <div class="nav-icon-container">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <span>اتصل بنا</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        
+        <div class="content">
+            <div class="profit-bar">
+                <p>اربح ما يصل الى 50 %</p>
+            </div>
+            
+            <div class="dashboard">
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-label">مناقصة:</div>
+                        <div class="stat-value">50%</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">أيام العمل:</div>
+                        <div class="stat-value countdown-container">
+                            <span id="days">02</span>:<span id="hours">00</span>:<span id="minutes">00</span>:<span id="seconds">00</span>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">الإيداعات:</div>
+                        <div class="stat-value">174.602.06 ₽</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">السحوبات:</div>
+                        <div class="stat-value">69.26.72 ₽</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">الدخل لمدة 20 يوما:</div>
+                        <div class="stat-value">₽ مئة</div>
+                    </div>
+                </div>
+                
+                <div class="piggy-bank">
+                    <svg class="piggy-svg" viewBox="0 0 512 512">
+                        <path fill="#f8a5c2" d="M422.5,214.5c0-76.6-62.4-139-139-139c-5.9,0-11.8,0.4-17.5,1.1c-9.9-4.8-20.4-8.7-31.4-11.3c-1.3-0.3-2.6,0.5-2.9,1.7
+                        c-0.3,1.3,0.5,2.6,1.7,2.9c10.5,2.4,20.5,6.2,30,10.7c-45.8,10.5-84.3,42.7-101.8,85.7c-5.1-1.5-10.5-2.6-16-3c-33.9-2.9-63.3,22-65.5,55.8
+                        c-0.8,10.9,1.3,21.6,5.9,31.2c-18.5,2.4-32.9,18.2-32.9,37.4c0,21,17,38,38,38h49.1c19.2,45.8,64.5,78,117.5,78c21.2,0,41.2-5.2,59-14.6
+                        c3.5,0.7,7,1.1,10.6,1.1c28.7,0,52-23.3,52-52c0-3.7-0.4-7.3-1.1-10.8h4.1c18.7,0,34-15.2,34-34C387,275.2,379.5,259.4,368,250
+                        C401.1,247.2,422.5,231.8,422.5,214.5z M356.5,293.6c0.8,4,1.2,8,1.2,12.1c0,33.1-27,60-60,60c-4.2,0-8.3-0.4-12.3-1.2
+                        c-17.8,9.6-37.9,14.8-58.9,14.8c-69.2,0-125.5-56.3-125.5-125.5c0-69.2,56.3-125.5,125.5-125.5s125.5,56.3,125.5,125.5
+                        c0,10.8-1.4,21.3-3.9,31.3h25.4c12.2,0,22,9.8,22,22S386.2,317.1,374,317.1h-20C354.9,309.4,355.9,301.5,356.5,293.6z"/>
+                        <circle fill="#ffcc5b" cx="280" cy="250" r="60"/>
+                        <path fill="#4a4a4a" d="M280,190c-33.1,0-60,26.9-60,60s26.9,60,60,60s60-26.9,60-60S313.1,190,280,190z M280,300c-27.6,0-50-22.4-50-50
+                        s22.4-50,50-50s50,22.4,50,50S307.6,300,280,300z"/>
+                        <path fill="#4a4a4a" d="M295,240h-10v-10c0-2.8-2.2-5-5-5s-5,2.2-5,5v10h-10c-2.8,0-5,2.2-5,5s2.2,5,5,5h10v10c0,2.8,2.2,5,5,5s5-2.2,5-5
+                        v-10h10c2.8,0,5-2.2,5-5S297.8,240,295,240z"/>
+                    </svg>
+                    <button class="start-now-btn">ابدأ الآن في الكسب</button>
+                </div>
+            </div>
+            
+            <div class="calculator-container">
+                <div class="slider-container">
+                    <div class="slider-label">ادخل المبلغ</div>
+                    <div class="slider-value" id="amount-display">10</div>
+                    <input type="range" min="5" max="5000" value="10" step="5" class="slider" id="amountSlider">
+                    <div class="slider-info">
+                        <div class="info-item">من 5.00.00 يوميا</div>
+                        <div class="info-item">النسبة : 50 % في اليوم</div>
+                        <div class="info-item">من لمدة 20 يوما 100.00</div>
+                    </div>
+                </div>
+                
+                <div class="result-container">
+                    <div class="result-box">
+                        <div class="result-label">النتيجة بعد يوم واحد:</div>
+                        <div class="result-value" id="daily-result">7.50 ₽</div>
+                    </div>
+                    <div class="result-box">
+                        <div class="result-label">النتيجة بعد 20 يوم:</div>
+                        <div class="result-value" id="total-result">150.00 ₽</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="users-table">
+                <div class="table-header">دخل المستخدم</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>لوجن</th>
+                            <th>الوقت المتبقي</th>
+                            <th>Ставка</th>
+                            <th>Вклад</th>
+                            <th>Заработок</th>
+                        </tr>
+                    </thead>
+                    <tbody id="users-table-body">
+                        <tr>
+                            <td class="user-cell"><i class="fas fa-user"></i> HANA568</td>
+                            <td class="countdown-cell" data-minutes="240">4:00</td>
+                            <td class="rate">50%</td>
+                            <td>112 <span class="currency">RUB</span></td>
+                            <td>248 <span class="currency">RUB</span></td>
+                        </tr>
+                        <tr>
+                            <td class="user-cell"><i class="fas fa-user"></i> AA11233</td>
+                            <td class="countdown-cell" data-minutes="360">6:00</td>
+                            <td class="rate">50%</td>
+                            <td>2 410 <span class="currency">RUB</span></td>
+                            <td>207 <span class="currency">RUB</span></td>
+                        </tr>
+                        <tr>
+                            <td class="user-cell"><i class="fas fa-user"></i> MOHAMED16</td>
+                            <td class="countdown-cell" data-minutes="420">7:00</td>
+                            <td class="rate">50%</td>
+                            <td>501 <span class="currency">RUB</span></td>
+                            <td>556 <span class="currency">RUB</span></td>
+                        </tr>
+                        <tr>
+                            <td class="user-cell"><i class="fas fa-user"></i> RTDAD</td>
+                            <td class="countdown-cell" data-minutes="600">10:00</td>
+                            <td class="rate">50%</td>
+                            <td>155 <span class="currency">RUB</span></td>
+                            <td>367 <span class="currency">RUB</span></td>
+                        </tr>
+                        <tr>
+                            <td class="user-cell"><i class="fas fa-user"></i> AMZORS586</td>
+                            <td class="countdown-cell" data-minutes="720">12:00</td>
+                            <td class="rate">50%</td>
+                            <td>7 690 <span class="currency">RUB</span></td>
+                            <td>538 <span class="currency">RUB</span></td>
+                        </tr>
+                        <tr>
+                            <td class="user-cell"><i class="fas fa-user"></i> AHMATHANOV1</td>
+                            <td class="countdown-cell" data-minutes="840">14:00</td>
+                            <td class="rate">50%</td>
+                            <td>1 210 <span class="currency">RUB</span></td>
+                            <td>9 <span class="currency">RUB</span></td>
+                        </tr>
+                        <tr>
+                            <td class="user-cell"><i class="fas fa-user"></i> HASEEB</td>
+                            <td class="countdown-cell" data-minutes="900">15:00</td>
+                            <td class="rate">50%</td>
+                            <td>111 <span class="currency">RUB</span></td>
+                            <td>50 <span class="currency">RUB</span></td>
+                        </tr>
+                        <tr>
+                            <td class="user-cell"><i class="fas fa-user"></i> SALEM1111</td>
+                            <td class="countdown-cell" data-minutes="1200">20:00</td>
+                            <td class="rate">50%</td>
+                            <td>88 <span class="currency">RUB</span></td>
+                            <td>66 <span class="currency">RUB</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="users-table withdrawals-table">
+                <div class="table-header">آخر السحوبات</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>لوجن</th>
+                            <th>الوقت المتبقي</th>
+                            <th>المبلغ</th>
+                            <th>الحالة</th>
+                        </tr>
+                    </thead>
+                    <tbody id="withdrawals-table-body">
+                        <tr>
+                            <td class="user-cell"><i class="fas fa-user"></i> USER7721</td>
+                            <td class="countdown-cell" data-minutes="240">4:00</td>
+                            <td>350 <span class="currency">RUB</span></td>
+                            <td class="status success">تم</td>
+                        </tr>
+                        <tr>
+                            <td class="user-cell"><i class="fas fa-user"></i> MARIA55</td>
+                            <td class="countdown-cell" data-minutes="300">5:00</td>
+                            <td>125 <span class="currency">RUB</span></td>
+                            <td class="status success">تم</td>
+                        </tr>
+                        <tr>
+                            <td class="user-cell"><i class="fas fa-user"></i> ALEX42</td>
+                            <td class="countdown-cell" data-minutes="360">6:00</td>
+                            <td>890 <span class="currency">RUB</span></td>
+                            <td class="status success">تم</td>
+                        </tr>
+                        <tr>
+                            <td class="user-cell"><i class="fas fa-user"></i> JOHN88</td>
+                            <td class="countdown-cell" data-minutes="480">8:00</td>
+                            <td>220 <span class="currency">RUB</span></td>
+                            <td class="status success">تم</td>
+                        </tr>
+                        <tr>
+                            <td class="user-cell"><i class="fas fa-user"></i> SMITH233</td>
+                            <td class="countdown-cell" data-minutes="540">9:00</td>
+                            <td>450 <span class="currency">RUB</span></td>
+                            <td class="status success">تم</td>
+                        </tr>
+                        <tr>
+                            <td class="user-cell"><i class="fas fa-user"></i> SARA123</td>
+                            <td class="countdown-cell" data-minutes="720">12:00</td>
+                            <td>175 <span class="currency">RUB</span></td>
+                            <td class="status success">تم</td>
+                        </tr>
+                        <tr>
+                            <td class="user-cell"><i class="fas fa-user"></i> DAVID44</td>
+                            <td class="countdown-cell" data-minutes="840">14:00</td>
+                            <td>320 <span class="currency">RUB</span></td>
+                            <td class="status success">تم</td>
+                        </tr>
+                        <tr>
+                            <td class="user-cell"><i class="fas fa-user"></i> EMMA77</td>
+                            <td class="countdown-cell" data-minutes="960">16:00</td>
+                            <td>560 <span class="currency">RUB</span></td>
+                            <td class="status success">تم</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="copyright">© 2025 WIXSGIFT. جميع الحقوق محفوظة.</div>
+    </div>
+    
+    <div class="loading-overlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-icon"><i class="fas fa-coins fa-spin"></i></div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

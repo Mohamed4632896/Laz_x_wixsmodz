@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WIXSGIFT - إيداع</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <div class="logo">WIXSGIFT</div>
+            </div>
+        </header>
+        
+        <div class="content">
+            <div class="profit-bar">
+                <p>اربح ما يصل الى 50 %</p>
+            </div>
+            
+            <div class="user-dashboard">
+                <h2 class="welcome-text">إيداع</h2>
+                
+                <div class="deposit-container">
+                    <div class="deposit-form">
+                        <div class="form-group">
+                            <label for="deposit-amount">المبلغ (روبل)</label>
+                            <input type="number" id="deposit-amount" min="5" value="100" step="5">
+                        </div>
+                        <div class="form-group">
+                            <label for="payment-method">طريقة الدفع</label>
+                            <select id="payment-method">
+                                <option value="payeer">Payeer</option>
+                                <option value="perfect-money">Perfect Money</option>
+                                <option value="bitcoin">Bitcoin</option>
+                            </select>
+                        </div>
+                        <div class="calculator-result">
+                            <div class="calculator-item">
+                                <div class="calculator-label">المبلغ:</div>
+                                <div class="calculator-value">100.00 ₽</div>
+                            </div>
+                            <div class="calculator-item">
+                                <div class="calculator-label">الدخل اليومي:</div>
+                                <div class="calculator-value">50.00 ₽</div>
+                            </div>
+                            <div class="calculator-item">
+                                <div class="calculator-label">الدخل لمدة 20 يوم:</div>
+                                <div class="calculator-value">1000.00 ₽</div>
+                            </div>
+                        </div>
+                        <button class="deposit-submit-btn">إرسال الطلب</button>
+                    </div>
+                </div>
+                
+                <div class="dashboard-menu">
+                    <a href="hello.html" class="menu-item">
+                        <div class="menu-icon-container">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <span>الرئيسية</span>
+                    </a>
+                    <a href="daily_bonus.html" class="menu-item">
+                        <div class="menu-icon-container">
+                            <i class="fas fa-gift"></i>
+                        </div>
+                        <span>المكافأة اليومية</span>
+                    </a>
+                    <a href="account_info.html" class="menu-item">
+                        <div class="menu-icon-container">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <span>معلومات الحساب</span>
+                    </a>
+                    <a href="deposit.html" class="menu-item active">
+                        <div class="menu-icon-container">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <span>إيداع</span>
+                    </a>
+                    <a href="referral.html" class="menu-item">
+                        <div class="menu-icon-container">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <span>الإحالة</span>
+                    </a>
+                    <a href="index.html" class="menu-item">
+                        <div class="menu-icon-container">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </div>
+                        <span>تسجيل الخروج</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">© 2025 WIXSGIFT. جميع الحقوق محفوظة.</div>
+    </div>
+    
+    <div class="loading-overlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-icon"><i class="fas fa-coins fa-spin"></i></div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
